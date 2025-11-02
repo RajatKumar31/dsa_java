@@ -97,6 +97,73 @@ class TreeNodeUse {
 		return sum;
 	}
 
+	// find the largest node
+	public static int largestNode(TreeNode<Integer> root) {
+		if (root == null) {
+			return Integer.MIN_VALUE;
+		}
+		int largest = root.data;
+		for (int i = 0; i < root.children.size(); i++) {
+			int childLargest = largestNode(root.children.get(i));
+			largest = Math.max(largest, childLargest);
+		}
+		return largest;
+	}
+
+	// count nodes which are greater than k
+	public static int nodesGreaterThanX(TreeNode<Integer> root, int k) {
+		if (root == null) {
+			return 0;
+		}
+		int count = 0;
+		if (root.data > k) {
+			count = count + 1;
+		}
+		for (int i = 0; i < root.children.size(); i++) {
+			count = count + nodesGreaterThanX(root.children.get(i), k);
+		}
+		return count;
+	}
+
+	public static int height(TreeNode<Integer> root) {
+		if (root == null) {
+			return 0;
+		}
+		int height = 0;
+		for (int i = 0; i < root.children.size(); i++) {
+			int childHeight = height(root.children.get(i));
+			height = Math.max(height, childHeight);
+		}
+		return height + 1;
+	}
+
+	public static void printAtDepthK(TreeNode<Integer> root, int depth) {
+		if (root == null) {
+			return;
+		}
+		if (depth == 0) {
+			System.out.print(root.data + " ");
+			return;
+		}
+		for (int i = 0; i < root.children.size(); i++) {
+			printAtDepthK(root.children.get(i), depth - 1);
+		}
+	}
+
+	public static int countLeafNodes(TreeNode<Integer> root) {
+		if (root == null) {
+			return 0;
+		}
+		int count = 0;
+		if (root.children.size() == 0) {
+			count = 1;
+		}
+		for (int i = 0; i < root.children.size(); i++) {
+			count = count + countLeafNodes(root.children.get(i));
+		}
+		return count;
+	}
+
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		// TreeNode<Integer> root = takeInput_recursive(sc);
@@ -105,7 +172,14 @@ class TreeNodeUse {
 		print_levelWise(root);
 		System.out.println("count : " + countNodes(root));
 		System.out.println("sum : " + sumOfNodes(root));
+		System.out.println("largest : " + largestNode(root));
+		System.out.println("nodesGreaterThanX : " + nodesGreaterThanX(root, 3));
+		System.out.println("height : " + height(root));
+		System.out.println("leaf Nodes : " + countLeafNodes(root));
+		printAtDepthK(root, 2);
+		sc.close();
 	}
+
 }
 
 class TreeNode<T> {
