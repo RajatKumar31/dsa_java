@@ -137,6 +137,7 @@ class TreeNodeUse {
 		return height + 1;
 	}
 
+	// print nodes at depth K
 	public static void printAtDepthK(TreeNode<Integer> root, int depth) {
 		if (root == null) {
 			return;
@@ -150,6 +151,7 @@ class TreeNodeUse {
 		}
 	}
 
+	// count the leaf nodes
 	public static int countLeafNodes(TreeNode<Integer> root) {
 		if (root == null) {
 			return 0;
@@ -162,6 +164,48 @@ class TreeNodeUse {
 			count = count + countLeafNodes(root.children.get(i));
 		}
 		return count;
+	}
+
+	// preOrderTraversal
+	public static void preOrderTraversal(TreeNode<Integer> root) {
+		if (root == null) {
+			return;
+		}
+		System.out.print(root.data + " ");
+		for (int i = 0; i < root.children.size(); i++) {
+			preOrderTraversal(root.children.get(i));
+		}
+	}
+
+	// postOrder traversal
+	public static void postOrderTraversal(TreeNode<Integer> root) {
+		if (root == null) {
+			return;
+		}
+		for (int i = 0; i < root.children.size(); i++) {
+			postOrderTraversal(root.children.get(i));
+		}
+		System.out.print(root.data + " ");
+	}
+
+	public static boolean checkIfContainsX(TreeNode<Integer> root, int x) {
+		if (root == null) {
+			return false;
+		}
+
+		Boolean ans = false;
+		if (root.data == x) {
+			ans = true;
+			return ans;
+		}
+
+		for (int i = 0; i < root.children.size(); i++) {
+			ans = checkIfContainsX(root.children.get(i), x);
+			if (ans == true) {
+				return true;
+			}
+		}
+		return ans;
 	}
 
 	public static void main(String[] args) {
@@ -177,6 +221,12 @@ class TreeNodeUse {
 		System.out.println("height : " + height(root));
 		System.out.println("leaf Nodes : " + countLeafNodes(root));
 		printAtDepthK(root, 2);
+		System.out.println();
+		preOrderTraversal(root);
+		System.out.println();
+		postOrderTraversal(root);
+		System.out.println();
+		System.out.println("checkIfContainsX : " + checkIfContainsX(root, 11));
 		sc.close();
 	}
 
