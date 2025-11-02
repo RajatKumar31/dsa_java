@@ -51,7 +51,6 @@ class TreeNodeUse {
 				queue.add(childNode);
 			}
 		}
-		sc.close();
 		return root;
 	}
 
@@ -188,6 +187,7 @@ class TreeNodeUse {
 		System.out.print(root.data + " ");
 	}
 
+	// check if the tree contains x
 	public static boolean checkIfContainsX(TreeNode<Integer> root, int x) {
 		if (root == null) {
 			return false;
@@ -206,6 +206,46 @@ class TreeNodeUse {
 			}
 		}
 		return ans;
+	}
+
+	// node with max sum of root data and its immediate children
+	public static TreeNode<Integer> maxSumNode(TreeNode<Integer> root) {
+		if (root == null) {
+			return null;
+		}
+		TreeNode<Integer> maxSumNode = root;
+		int maxSum = sum(root);
+		for (int i = 0; i < root.children.size(); i++) {
+			TreeNode<Integer> childMaxNode = maxSumNode(root.children.get(i));
+			int childSum = sum(childMaxNode);
+			if (maxSum < childSum) {
+				maxSum = childSum;
+				maxSumNode = childMaxNode;
+			}
+		}
+		return maxSumNode;
+	}
+
+	private static int sum(TreeNode<Integer> root) {
+		int sum = root.data;
+		for (int i = 0; i < root.children.size(); i++) {
+			sum = sum + root.children.get(i).data;
+		}
+		return sum;
+	}
+
+	public static boolean checkIdentical(TreeNode<Integer> root1, TreeNode<Integer> root2) {
+		if ((root1.data != root2.data) || (root1.children.size() != root2.children.size())) {
+			return false;
+		} else {
+			for (int i = 0; i < root1.children.size(); i++) {
+				boolean ans = checkIdentical(root1.children.get(i), root2.children.get(i));
+				if (ans == false) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	public static void main(String[] args) {
@@ -227,6 +267,10 @@ class TreeNodeUse {
 		postOrderTraversal(root);
 		System.out.println();
 		System.out.println("checkIfContainsX : " + checkIfContainsX(root, 11));
+		System.out.println("maxSumNode : " + maxSumNode(root).data);
+		// TreeNode<Integer> root1 = takeInput_levelWise();
+		// TreeNode<Integer> root2 = takeInput_levelWise();
+		// System.out.println("check identical : " + checkIdentical(root1, root2));
 		sc.close();
 	}
 
