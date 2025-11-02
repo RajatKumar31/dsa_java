@@ -248,6 +248,25 @@ class TreeNodeUse {
 		return true;
 	}
 
+	public static TreeNode<Integer> findNextLargerNode(TreeNode<Integer> root, int n) {
+		if (root == null) {
+			return null;
+		}
+		TreeNode<Integer> nextLargerNode = null;
+		if (root.data > n) {
+			nextLargerNode = root;
+		}
+		for (int i = 0; i < root.children.size(); i++) {
+			TreeNode<Integer> nextLargerChildNode = findNextLargerNode(root.children.get(i), n);
+			if ((nextLargerNode != null && nextLargerChildNode != null
+					&& nextLargerNode.data > nextLargerChildNode.data)
+					|| (nextLargerNode == null && nextLargerChildNode != null)) {
+				nextLargerNode = nextLargerChildNode;
+			}
+		}
+		return nextLargerNode;
+	}
+
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		// TreeNode<Integer> root = takeInput_recursive(sc);
@@ -268,6 +287,8 @@ class TreeNodeUse {
 		System.out.println();
 		System.out.println("checkIfContainsX : " + checkIfContainsX(root, 11));
 		System.out.println("maxSumNode : " + maxSumNode(root).data);
+		System.out.println();
+		System.err.println("next larger node : " + findNextLargerNode(root, 3).data);
 		// TreeNode<Integer> root1 = takeInput_levelWise();
 		// TreeNode<Integer> root2 = takeInput_levelWise();
 		// System.out.println("check identical : " + checkIdentical(root1, root2));
