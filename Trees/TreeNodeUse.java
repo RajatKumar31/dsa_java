@@ -271,8 +271,8 @@ class TreeNodeUse {
 		if (root == null) {
 			return null;
 		}
-		TreeNode<Integer> largest = root;
-		TreeNode<Integer> secondLargestNode = null;
+		TreeNode<Integer> largest = new TreeNode<>(Integer.MIN_VALUE);
+		TreeNode<Integer> secondLargestNode = new TreeNode<>(Integer.MIN_VALUE);
 		Queue<TreeNode<Integer>> queue = new LinkedList<>();
 		queue.add(root);
 		while (!queue.isEmpty()) {
@@ -280,7 +280,7 @@ class TreeNodeUse {
 			if (frontNode.data > largest.data) {
 				secondLargestNode = largest;
 				largest = frontNode;
-			} else if (secondLargestNode != null && frontNode.data > secondLargestNode.data) {
+			} else if (frontNode.data > secondLargestNode.data && frontNode.data < largest.data) {
 				secondLargestNode = frontNode;
 			}
 			for (int i = 0; i < frontNode.children.size(); i++) {
