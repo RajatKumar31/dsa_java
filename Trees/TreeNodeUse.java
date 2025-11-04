@@ -268,8 +268,26 @@ class TreeNodeUse {
 	}
 
 	public static TreeNode<Integer> findSecondLargest(TreeNode<Integer> root) {
-		// use pair class
-		return null;
+		if (root == null) {
+			return null;
+		}
+		TreeNode<Integer> largest = root;
+		TreeNode<Integer> secondLargestNode = null;
+		Queue<TreeNode<Integer>> queue = new LinkedList<>();
+		queue.add(root);
+		while (!queue.isEmpty()) {
+			TreeNode<Integer> frontNode = queue.poll();
+			if (frontNode.data > largest.data) {
+				secondLargestNode = largest;
+				largest = frontNode;
+			} else if (secondLargestNode != null && frontNode.data > secondLargestNode.data) {
+				secondLargestNode = frontNode;
+			}
+			for (int i = 0; i < frontNode.children.size(); i++) {
+				queue.add(frontNode.children.get(i));
+			}
+		}
+		return secondLargestNode;
 	}
 
 	public static void replaceWithDepthValue(TreeNode<Integer> root) {
@@ -308,9 +326,12 @@ class TreeNodeUse {
 		System.out.println("maxSumNode : " + maxSumNode(root).data);
 		System.out.println();
 		System.out.println("next larger node : " + findNextLargerNode(root, 3).data);
-		// System.out.println("second largest node : " + findSecondLargest(root).data);
-		replaceWithDepthValue(root);
-		print_levelWise(root);
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println("second largest node : " + findSecondLargest(root).data);
+		// replaceWithDepthValue(root);
+		// print_levelWise(root);
 		// TreeNode<Integer> root1 = takeInput_levelWise();
 		// TreeNode<Integer> root2 = takeInput_levelWise();
 		// System.out.println("check identical : " + checkIdentical(root1, root2));
