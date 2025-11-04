@@ -1,6 +1,5 @@
-package Arrays;
 
-import java.util.HashMap;
+import java.util.*;
 
 class two_sum {
 
@@ -22,10 +21,42 @@ class two_sum {
 		return ans;
 	}
 
+	public static List<List<Integer>> twoSum_optimal(int[] nums, int target) {
+		Arrays.sort(nums);
+		List<List<Integer>> ans = new ArrayList<>();
+		int low = 0, high = nums.length - 1;
+
+		while (low < high) {
+			int sum = nums[low] + nums[high];
+			if (sum < target) {
+				low++;
+			} else if (sum > target) {
+				high--;
+			} else {
+				ans.add(Arrays.asList(nums[low], nums[high]));
+				while (low < high && nums[low] == nums[low + 1]) {
+					low++;
+				}
+				low++;
+				// while (low < high && nums[high] == nums[high - 1]) {
+				// high--;
+				// }
+			}
+		}
+		return ans;
+	}
+
 	public static void main(String[] args) {
-		int[] arr = { 2, 7, 11, 15 };
-		int[] ans = twoSum(arr, 9);
-		System.out.println(ans[0]);
-		System.out.println(ans[1]);
+		int[] arr = { -3, -8, -8, -2, -5 };
+		List<List<Integer>> ans = twoSum_optimal(arr, -10);
+		for (int i = 0; i < ans.size(); i++) {
+			List<Integer> l = ans.get(i);
+			for (int j = 0; j < l.size(); j++) {
+				System.out.print(l.get(j) + " ");
+			}
+			System.out.println();
+		}
+		// System.out.println(ans[0]);
+		// System.out.println(ans[1]);
 	}
 }
