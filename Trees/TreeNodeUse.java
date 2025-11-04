@@ -267,6 +267,25 @@ class TreeNodeUse {
 		return nextLargerNode;
 	}
 
+	public static TreeNode<Integer> findSecondLargest(TreeNode<Integer> root) {
+		// use pair class
+		return null;
+	}
+
+	public static void replaceWithDepthValue(TreeNode<Integer> root) {
+		replaceWithDepthValue_helper(root, 0);
+	}
+
+	private static void replaceWithDepthValue_helper(TreeNode<Integer> root, int depth) {
+		if (root == null) {
+			return;
+		}
+		root.data = depth;
+		for (int i = 0; i < root.children.size(); i++) {
+			replaceWithDepthValue_helper(root.children.get(i), depth + 1);
+		}
+	}
+
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		// TreeNode<Integer> root = takeInput_recursive(sc);
@@ -288,7 +307,10 @@ class TreeNodeUse {
 		System.out.println("checkIfContainsX : " + checkIfContainsX(root, 11));
 		System.out.println("maxSumNode : " + maxSumNode(root).data);
 		System.out.println();
-		System.err.println("next larger node : " + findNextLargerNode(root, 3).data);
+		System.out.println("next larger node : " + findNextLargerNode(root, 3).data);
+		// System.out.println("second largest node : " + findSecondLargest(root).data);
+		replaceWithDepthValue(root);
+		print_levelWise(root);
 		// TreeNode<Integer> root1 = takeInput_levelWise();
 		// TreeNode<Integer> root2 = takeInput_levelWise();
 		// System.out.println("check identical : " + checkIdentical(root1, root2));
